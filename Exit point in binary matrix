@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+// Function to find the exit
+// point in a given matrix
+vector<int> FindExitPoint(
+    vector<vector<int> >& matrix)
+{
+    // initialization of row, column
+    int i = 0, j = 0;
+    int dir = 0;
+ 
+    while (true) {
+        dir = (dir + matrix[i][j]) % 4;
+ 
+        // If a cell is traversed
+        // then mark it has 0
+        if (matrix[i][j] == 1) {
+            matrix[i][j] = 0;
+        }
+        // Right direction
+        if (dir == 0) {
+            j++;
+        }
+        // Down direction
+        else if (dir == 1) {
+            i++;
+        }
+        // Left direction
+        else if (dir == 2) {
+            j--;
+        }
+        // Up direction
+        else if (dir == 3) {
+            i--;
+        }
+ 
+        // decrement either the row or col
+        // since it crossed the boundary
+        if (i < 0) {
+            i++;
+            break;
+        }
+        else if (i == matrix.size()) {
+            i--;
+            break;
+        }
+        else if (j < 0) {
+            j++;
+            break;
+        }
+        else if (j == matrix[0].size()) {
+            j--;
+            break;
+        }
+    }
