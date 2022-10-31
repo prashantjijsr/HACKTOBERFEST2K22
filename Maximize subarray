@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+// Function to find the maximum
+// number of groups of X
+// consecutive Zeroes
+int maxGroupOfZeroes(string str, int X)
+{
+  int n = str.size();
+ 
+  // Number of groups before flipping '1'
+  int groups = 0;
+ 
+  // Iterating over the string
+  int i = 0;
+  while (i < n) {
+ 
+    // It will keep the track
+    // of consecutive zeroes
+    int zero = 0;
+    while (i < n && str[i] == '0') {
+      zero++;
+      i++;
+    }
+    i++;
+ 
+    // It will break those
+    // consecutive zeroes into groups
+    groups += (zero / X);
+  }
+ 
+  // Left variable will count
+  // the consecutive zeroes
+  // on the left side of '1'
+  int left = 0;
+ 
+  // Right variable will count
+  // the consecutive zeroes
+  // on the right size of '1'
+  int right = 0;
+ 
+  // Iterating str from 0 index
+  i = 0;
+  while (i < n) {
+ 
+    char ch = str[i];
+ 
+    // If it is '0' keep
+    // incrementing left zeroes
+    if (ch == '0') {
+      left++;
+      i++;
+    }
+    // Else increment
+    // right zeroes while
+    // character is '0'
+    else {
+ 
+      int j = i;
+      i++;
+      while (i < n && str[i] != '1') {
+        i++;
+        right++;
+      }
+ 
+      int contribute = (left + right + 1) / X;
+      int without = ((left / X) + (right / X));
+ 
+      // Checking after flipping
+      // current '1' will
+      // it affect the groups or not
+      if (without != contribute) {
+        return ++groups;
+      }
+ 
+      // If it doesn't affect
+      // then right zeroes
+      // will become left zeroes
+      // and for right
+      // zeroes we will have
+      // to count it again
+      left = right;
+      right = 0;
+    }
+  }
+ 
+  // Return number of groups
+  return groups;
+}
+ 
+// Driver Code
+int main()
+{
+  string str = "0010001";
+  int X = 2;
+  int max_groups = maxGroupOfZeroes(str, X);
+  cout << (max_groups);
+ 
+  return 0;
+}
